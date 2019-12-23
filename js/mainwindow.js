@@ -14,6 +14,7 @@ editor.getSession().setMode("ace/mode/markdown");
 editor.getSession().setUseWrapMode(true);
 
 // give a focus on the editor.
+// "Focus" means that the application window will be in front and clicked like other appsin mac.
 editor.focus();
 
 // open developer tools when DEBUG_GUEST=true.
@@ -32,4 +33,15 @@ editor.on("change", (e) => {
     // send a message which notifies modification when the document is changed.
     webview.send('update-markdown', editor.getValue());
   }
+});
+
+// full-screen control from here.
+var editorPane = document.getElementById('editor');
+
+webview.addEventListener('enter-html-full-screen', () => {
+  editorPane.setAttribute('style', 'display:none');
+});
+
+webview.addEventListener('leave-html-full-screen', () => {
+  editorPane.removeAttribute('style');
 });
