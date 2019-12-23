@@ -24,3 +24,12 @@ if (process.env.DEBUG_GUEST) {
     webview.openDevTools()
   });
 }
+
+// an event handler which receives changes on document.
+editor.on("change", (e) => {
+  if (e.data.range.start.raw != e.data.range.end.row) {
+
+    // send a message which notifies modification when the document is changed.
+    webview.send('update-markdown', editor.getValue());
+  }
+});
